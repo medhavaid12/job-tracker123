@@ -1,7 +1,8 @@
 import "./lib/env.js";
 import express from "express";
 import connectToDB from "./lib/dbConnection.js";
-import geminiParser from "./routes/ParserRouter.js";
+import geminiRouter from "./routes/parser.router.js";
+import authRouter from "./routes/auth.router.js";
 import cors from "cors";
 
 const app = express();
@@ -14,7 +15,8 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/data", geminiParser);
+app.use("/api/auth", authRouter);
+app.use("/api/parse-data", geminiRouter);
 
 app.get("/", (req, res) => {
   res.send("Hi from backend");

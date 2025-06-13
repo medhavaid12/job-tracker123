@@ -1,4 +1,4 @@
-import ParserRepository from "../repositories/ParserRepository.js";
+import ParserRepository from "../repositories/parser.pepository.js";
 
 export default class ParserController {
   constructor() {
