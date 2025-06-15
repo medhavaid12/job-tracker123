@@ -22,6 +22,16 @@ app.get("/", (req, res) => {
   res.send("Hi from backend");
 });
 
+app.use((error, req, res, next) => {
+  console.error("Error:", error.message);
+  res
+    .status(error.message.includes("Invalid email or password") ? 401 : 500)
+    .json({
+      status: "failed",
+      message: error.message,
+    });
+});
+
 app.listen(PORT, () => {
   console.log("Server is listening:", PORT);
   connectToDB();
