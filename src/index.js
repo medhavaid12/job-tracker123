@@ -1,10 +1,10 @@
 import "./lib/env.js";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import connectToDB from "./lib/dbConnection.js";
 import geminiRouter from "./routes/parser.router.js";
 import authRouter from "./routes/auth.router.js";
-
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -15,6 +15,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/parse-data", geminiRouter);
 app.use("/api/auth", authRouter);
 
