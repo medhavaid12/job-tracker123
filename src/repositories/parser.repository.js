@@ -5,12 +5,14 @@ export default class ParserRepository {
   async parseData(data) {
     try {
       const result = await geminiParser(data);
-      const newJob = new JobModel(JSON.parse(result));
-      newJob.save();
+      const jobData = JSON.parse(result);
+
+      const newJob = new JobModel(jobData);
+      await newJob.save();
 
       return newJob;
     } catch (error) {
-      console.log(error);
+      throw new Error(`ParserRepository Error: ${error.message}`);
     }
   }
 }

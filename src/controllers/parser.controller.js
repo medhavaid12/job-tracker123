@@ -1,4 +1,4 @@
-import ParserRepository from "../repositories/parser.pepository.js";
+import ParserRepository from "../repositories/parser.repository.js";
 
 export default class ParserController {
   constructor() {
@@ -6,8 +6,9 @@ export default class ParserController {
   }
 
   async parseData(req, res, next) {
+    const data = req.body;
     try {
-      const result = await this.parserRepository.parseData(req.body);
+      const result = await this.parserRepository.parseData(data);
 
       if (!result)
         return res.status(500).json({
@@ -15,10 +16,10 @@ export default class ParserController {
           message: "Something went wrong. Try again later!",
         });
 
-      console.log(result);
       res.status(200).json({ status: "success", response: result });
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      next(error);
     }
   }
 }
