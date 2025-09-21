@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// User Schema
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -12,10 +13,10 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, trim: true },
     firstName: { type: String, default: "" },
     lastName: { type: String, default: "" },
-    savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
   },
   { timestamps: true }
 );
 
+// Export user model
 const UserModel = mongoose.model("User", userSchema);
 export default UserModel;

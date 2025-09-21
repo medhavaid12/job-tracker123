@@ -4,6 +4,7 @@ export default function jwtAuth(req, res, next) {
   // Get token
   const token =
     req.cookies?.jwt ||
+    // Extension validation
     (req.headers.authorization?.startsWith("Bearer ")
       ? req.headers.authorization.split(" ")[1]
       : null);

@@ -5,7 +5,6 @@ export default class AuthRepository {
   // Check Auth
   async checkAuth(userData) {
     try {
-      // Await the DB call
       const user = await UserModel.findById(userData);
       if (!user) return null;
 
