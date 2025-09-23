@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import connectToDB from "./lib/dbConnection.js";
 import geminiRouter from "./routes/parser.router.js";
 import authRouter from "./routes/auth.router.js";
+import jobRouter from "./routes/job.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -23,9 +24,10 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRouter);
+app.use("/api/jobs", jobRouter);
 app.use("/api/parse-data", geminiRouter);
 
-// default route
+// Default route
 app.get("/", (req, res) => {
   res.send("Hi from backend");
 });

@@ -8,36 +8,23 @@ const prompt = `
     You are an expert text parser and extractor. Given a raw job description text blob, extract meaningful data strictly without changing or rephrasing any content. Output ONLY the data in this exact JSON format:
 
     {
-        "job": {
-            "title": "",
-            "location": "",
-            "posted_ago": "",
-            "applicants_count": "",
-            "employment_type": "",
-            "work_location_type": "",
-            "skills_match_summary": "",
-            "overview": "",
-            "qualifications_and_skills": [],
-            "roles_and_responsibilities": [],
-            "desired_skills": []
-        },
-        "company": {
-            "name": "",
-            "industry": "",
-            "employee_count": "",
-            "linkedin_followers": "",
-            "description": "",
-            "headquarters_location": ""
-        },
-        "applicant_insights": {
-            "employee_growth_rate": "",
-            "education_level_distribution": {
-                "bachelor_of_technology": ""
-            },
-            "seniority_level_distribution": {
-                "entry_level": ""
-            }
-        }
+      "title":"",
+      "location":"",
+      "posted_ago":"",
+      "applicants_count":"",
+      "employment_type":"",
+      "work_location_type":"",
+      "overview":"",
+      "qualifications_and_skills":[],
+      "roles_and_responsibilities":[],
+      "company":{
+          "name":"",
+          "industry":"",
+          "employee_count":"",
+          "linkedin_followers":"",
+          "description":"",
+          "headquarters_location":""
+      }
     }
 
     - Use exact text from the input for each field.
@@ -68,5 +55,6 @@ export default async function sendRequest(data) {
     .match(/```json\b[\s\S]*?```/)[0]
     .replace(/```json\b|```/g, "")
     .trim();
+
   return result;
 }

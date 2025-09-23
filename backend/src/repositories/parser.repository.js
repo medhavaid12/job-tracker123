@@ -1,33 +1,29 @@
 import geminiParser from "../lib/geminiAI.js";
-import UserModel from "../models/auth.model.js";
-import JobModel from "../models/parser.model.js";
+import JobModel from "../models/job.model.js";
 
 export default class ParserRepository {
   async parseData(data, userId) {
     try {
+      // Await for AI to parse data
       const result = await geminiParser(data);
       const jobData = JSON.parse(result);
 
+      // Check if it already exists
       let jobDoc = await JobModel.findOne({
-        "job.title": jobData.job.title,
-        "company.name": jobData.company.name,
+        ...result,
+        createdBy: userId,
       });
 
+      // Create new if it does not exist
       if (!jobDoc) {
-        jobDoc = new JobModel(jobData);
+        jobDoc = new JobModel({
+          ...jobData,
+          createdBy: userId,
+        });
         await jobDoc.save();
       }
 
-      const updatedDocument = await UserModel.findByIdAndUpdate(
-        userId,
-        {
-          $addToSet: {
-            savedJobs: jobDoc._id,
-          },
-        },
-        { returnDocument: "after" }
-      );
-      return updatedDocument;
+      return jobDoc;
     } catch (error) {
       throw new Error(`ParserRepository Error: ${error.message}`);
     }
