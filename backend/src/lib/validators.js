@@ -1,11 +1,24 @@
 // data: user input data
 // requiredFields: Array of required fields
 export default function validateUserInput(data, requiredFields) {
+  // Get nested values
+  const getNestedValues = (obj, path) => {
+    return path
+      .split(".")
+      .reduce(
+        (acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined),
+        obj
+      );
+  };
+
   // iterate over the requiredFields array
   for (const field of requiredFields) {
+    const value = getNestedValues(data, field);
     // check the field in user input data
-    if (!data[field] || data[field].trim() === "") {
-      return `Missing or invalid ${field}.`;
+    if (value === undefined || value === null) {
+      return `Missing ${field}`;
+    } else if (typeof value === "string" && value.trim() === "") {
+      return `Invalid ${field}`;
     }
   }
 
@@ -17,5 +30,7 @@ export default function validateUserInput(data, requiredFields) {
   if (data.password && data.password.length < 6) {
     return "Invalid password. Must be atleast 6 characters long.";
   }
+
+  // No errors
   return null;
 }
