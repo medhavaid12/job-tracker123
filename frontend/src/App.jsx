@@ -14,6 +14,9 @@ import Applications from "./pages/Applications";
 import SavedJobs from "./pages/SavedJobs";
 import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
+import EditJob from "./pages/EditJob";
+import Parser from "./pages/Parser";
+import Recommendations from "./pages/Recommendations";
 
 // Layout to handle page-level navigation loader
 
@@ -42,6 +45,9 @@ const App = () => {
             { path: "saved-jobs", element: <SavedJobs /> },
             { path: "analytics", element: <Analytics /> },
             { path: "profile", element: <Profile /> },
+            { path: "edit-job/:jobId", element: <EditJob /> },
+            { path: "parse-job", element: <Parser /> },
+            { path: "recommendations", element: <Recommendations /> },
           ],
         },
         { path: "login", element: <Login /> },

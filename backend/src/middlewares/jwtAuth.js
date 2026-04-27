@@ -16,7 +16,8 @@ export default function jwtAuth(req, res, next) {
 
   // Verify and Attach payload
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const secret = process.env.JWT_SECRET || "fallback-jwt-secret-change-in-prod";
+    const payload = jwt.verify(token, secret);
     req.user = { id: payload.userId };
     next();
   } catch (error) {

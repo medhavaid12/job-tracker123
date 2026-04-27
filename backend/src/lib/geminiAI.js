@@ -1,8 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_KEY,
-});
+let ai;
+function getAI() {
+  if (!ai) {
+    const key = process.env.GEMINI_KEY;
+    if (!key) throw new Error("GEMINI_KEY is not set in environment");
+    ai = new GoogleGenAI({ apiKey: key });
+  }
+  return ai;
+}
 
 const prompt = `
     You are an expert text parser and extractor. Given a raw job description text blob, extract meaningful data strictly without changing or rephrasing any content. Output ONLY the data in this exact JSON format:
@@ -40,7 +46,7 @@ const prompt = `
 export default async function sendRequest(data) {
   const request = prompt + data.data;
 
-  const response = await ai.models.generateContent({
+  const response = await getAI().models.generateContent({
     model: "gemini-2.0-flash",
     contents: [
       {

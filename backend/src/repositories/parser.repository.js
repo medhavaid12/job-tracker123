@@ -10,7 +10,7 @@ export default class ParserRepository {
 
       // Check if it already exists
       let jobDoc = await JobModel.findOne({
-        ...result,
+        ...jobData,
         createdBy: userId,
       });
 

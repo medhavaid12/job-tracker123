@@ -23,6 +23,8 @@ export default class AuthController {
   // Signup
   async signup(req, res, next) {
     const { accessFrom, ...user } = req.body;
+    console.log("Signup request body:", req.body);
+    console.log("Extracted user:", user);
     try {
       // User Input validation
       const validationError = validateUserInput(user, [
@@ -32,6 +34,7 @@ export default class AuthController {
         "lastName",
       ]);
       if (validationError) {
+        console.log("Validation error:", validationError);
         return res
           .status(400)
           .json({ status: "failed", message: validationError });
@@ -53,10 +56,13 @@ export default class AuthController {
   // Login
   async login(req, res, next) {
     const { accessFrom, ...user } = req.body.data || req.body;
+    console.log("Login request body:", req.body);
+    console.log("Extracted user:", user);
     try {
       // User Input validation
       const validationError = validateUserInput(user, ["email", "password"]);
       if (validationError) {
+        console.log("Validation error:", validationError);
         return res
           .status(400)
           .json({ status: "failed", message: validationError });

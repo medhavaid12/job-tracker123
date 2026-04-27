@@ -26,7 +26,8 @@ export const fetchUser = createAsyncThunk(
 
       return data.response;
     } catch (error) {
-      return thunk.rejectWithValue(error.message);
+      const message = error.response?.data?.message || error.message;
+      return thunk.rejectWithValue(message);
     }
   }
 );
@@ -47,12 +48,13 @@ export const SignupUser = createAsyncThunk(
 
       // Validation check
       if (data.status === "failed" || !data.response) {
-        return thunk.rejectWithValue("Signup failed. Try again!");
+        return thunk.rejectWithValue(data.message || "Signup failed. Try again!");
       }
 
       return data.response;
     } catch (error) {
-      return thunk.rejectWithValue(error.message);
+      const message = error.response?.data?.message || error.message;
+      return thunk.rejectWithValue(message);
     }
   }
 );
@@ -73,12 +75,13 @@ export const loginUser = createAsyncThunk(
 
       // Validation check
       if (data.status === "failed" || !data.response) {
-        return thunk.rejectWithValue("Login failed. Try again!");
+        return thunk.rejectWithValue(data.message || "Login failed. Try again!");
       }
 
       return data.response;
     } catch (error) {
-      return thunk.rejectWithValue(error.message);
+      const message = error.response?.data?.message || error.message;
+      return thunk.rejectWithValue(message);
     }
   }
 );
@@ -94,12 +97,13 @@ export const logoutUser = createAsyncThunk(
 
       // Validation check
       if (data.status === "failed" || !data.response) {
-        return thunk.rejectWithValue("Logout failed. Try again!");
+        return thunk.rejectWithValue(data.message || "Logout failed. Try again!");
       }
 
       return data.response;
     } catch (error) {
-      return thunk.rejectWithValue(error.message);
+      const message = error.response?.data?.message || error.message;
+      return thunk.rejectWithValue(message);
     }
   }
 );

@@ -16,7 +16,8 @@ export default function generateJwtToken(user, accessFrom, res) {
   const expiresIn = accessFrom === "extension" ? "3d" : "7d";
 
   // Create token
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+  const secret = process.env.JWT_SECRET || "fallback-jwt-secret-change-in-prod";
+  const token = jwt.sign({ userId: user._id }, secret, {
     expiresIn,
   });
 
